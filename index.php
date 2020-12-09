@@ -1,46 +1,10 @@
 <?php
 
-class Character
-{
-    public $name;
-    public $life;
-    public $power;
-    public $defence;
-    public $speed;
-    public $luck;
-    public $additionalPower;
-    public $additionalDefence;
+require('character.php');
 
-    public function __construct($name, $life, $power, $defence, $speed, $luck, $additionalPower, $additionalDefence)
-    {
-        $this->name = $name;
-        $this->life = $life;
-        $this->power = $power;
-        $this->defence = $defence;
-        $this->speed = $speed;
-        $this->luck = $luck;
-        $this->additionalPower = $additionalPower;
-        $this->additionalDefence = $additionalDefence;
-    }
+$carl = new Character("Carl", rand(65, 95), rand(60, 70), rand(40, 50), rand(40, 50), rand(10, 30), "Forta dragonului", "Scutul fermecat");
 
-    public function is(Character $character)
-    {
-        return $this->name === $character->name;
-    }
-}
-
-class Carl extends Character
-{
-}
-
-class Beast extends Character
-{
-
-}
-
-$Carl = new Character("Carl", rand(65, 95), rand(60, 70), rand(40, 50), rand(40, 50), rand(10, 30), "Forta dragonului", "Scutul fermecat");
-
-$Beast = new Character("Beast", rand(55, 80), rand(50, 80), rand(35, 55), rand(40, 60), rand(25, 40), null, null);
+$beast = new Character("Beast", rand(55, 80), rand(50, 80), rand(35, 55), rand(40, 60), rand(25, 40), null, null);
 
 function presentCharacters($firstPlayer, $secondPlayer)
 {
@@ -245,4 +209,4 @@ function announceWinner($winner = null)
     }
 }
 
-startFight($Carl, $Beast);
+startFight($carl, $beast);
