@@ -6,7 +6,7 @@ $carl = new Character("Carl", rand(65, 95), rand(60, 70), rand(40, 50), rand(40,
 
 $beast = new Character("Beast", rand(55, 80), rand(50, 80), rand(35, 55), rand(40, 60), rand(25, 40), null, null);
 
-function presentCharacters($firstPlayer, $secondPlayer)
+function presentCharacters(Character $firstPlayer, Character $secondPlayer): void
 {
         echo "Present the characters";
         echo "</br>";
@@ -52,7 +52,6 @@ function presentCharacters($firstPlayer, $secondPlayer)
         echo "</br>";
 }
 
-
 function usesFortaDragonului(Character $character): bool
 {
     if (rand(0, 100) < 10 && $character->additionalPower == "Forta dragonului") {
@@ -64,7 +63,6 @@ function usesFortaDragonului(Character $character): bool
 
 function usesScutulFermecat(Character $character): bool
 {
-    // return true;
     if (rand(0, 100) < 20 && $character->additionalDefence == "Scutul fermecat") {
         return true;
     } else {
@@ -72,13 +70,12 @@ function usesScutulFermecat(Character $character): bool
     }
 }
 
-function isLuckyDefender(Character $defender)
+function isLuckyDefender(Character $defender): bool
 {
     if (rand(0, 100) < $defender->luck) {
         return true;
     }
 }
-
 
 function attacker(Character $firstPlayer, Character $secondPlayer): Character
 {
@@ -97,7 +94,7 @@ function attacker(Character $firstPlayer, Character $secondPlayer): Character
     }
 }
 
-function computeAttackDamage($power, $defence)
+function computeAttackDamage($power, $defence): int
 {
     $damage = $power - $defence;
 
@@ -110,8 +107,7 @@ function computeAttackDamage($power, $defence)
     }
 }
 
-
-function performAttack($attacker, $defender)
+function performAttack(Character $attacker, Character $defender): void
 {
     $attackerPower = $attacker->power;
 
@@ -141,7 +137,37 @@ function performAttack($attacker, $defender)
     }
 }
 
-function startFight($firstPlayer, $secondPlayer)
+function displayCharactersAttributes(Character $character): void
+{
+    echo $character->name . " life: " . $character->life;
+    echo "</br>";
+    echo $character->name . " power: " . $character->power;
+    echo "</br>";
+    echo $character->name . " defence: " . $character->defence;
+    echo "</br>";
+}
+
+function computeWinnerFromPlayersLives(Character $firstPlayer, Character $secondPlayer): void
+{
+    if ($firstPlayer->life < $secondPlayer->life) {
+        announceWinner($secondPlayer);
+    } elseif ($firstPlayer->life == $secondPlayer->life) {
+        announceWinner();
+    } else {
+        announceWinner($firstPlayer);
+    }
+}
+
+function announceWinner($winner = null): void
+{
+    if (is_null($winner)) {
+        echo "It's a draw.";
+    } else {
+        echo $winner->name . " won!";
+    }
+}
+
+function startFight(Character $firstPlayer, Character $secondPlayer): void
 {
     presentCharacters($firstPlayer, $secondPlayer);
 
@@ -177,36 +203,6 @@ function startFight($firstPlayer, $secondPlayer)
     }
 
     computeWinnerFromPlayersLives($firstPlayer, $secondPlayer);
-}
-
-function displayCharactersAttributes($character)
-{
-    echo $character->name . " life: " . $character->life;
-    echo "</br>";
-    echo $character->name . " power: " . $character->power;
-    echo "</br>";
-    echo $character->name . " defence: " . $character->defence;
-    echo "</br>";
-}
-
-function computeWinnerFromPlayersLives($firstPlayer, $secondPlayer)
-{
-    if ($firstPlayer->life < $secondPlayer->life) {
-        announceWinner($secondPlayer);
-    } elseif ($firstPlayer->life == $secondPlayer->life) {
-        announceWinner();
-    } else {
-        announceWinner($firstPlayer);
-    }
-}
-
-function announceWinner($winner = null)
-{
-    if (is_null($winner)) {
-        echo "It's a draw.";
-    } else {
-        echo $winner->name . " won!";
-    }
 }
 
 startFight($carl, $beast);
